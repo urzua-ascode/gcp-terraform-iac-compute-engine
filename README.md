@@ -64,3 +64,46 @@ Desde la VM web, puedes conectarte a PostgreSQL en la VM privada usando la IP in
 - Diseño de red segmentada (pública/privada).
 - Principio de mínimo privilegio en firewall (IAP para SSH, puertos específicos).
 - Observabilidad con Cloud Ops Agent.
+
+
+## Diagrama de Arquitectura
+
+```mermaid
+graph TB
+    A["Internet"] -->|HTTP/HTTPS Port 80| B["Firewall Rule<br/>HTTP/HTTPS"]
+    A -->|SSH Port 22| C["Firewall Rule<br/>SSH via IAP"]
+    
+    B --> D["Public Subnet<br/>10.0.1.0/24"]
+    C --> D
+    
+    D --> E["Web VM<br/>Nginx"]
+    E -->|Internal Traffic| F["Private Subnet<br/>10.0.2.0/24"]
+    
+    F --> G["Database VM<br/>PostgreSQL"]
+    
+    D -->|IAP Tunnel| C
+    G -->|Logging| H["Cloud Ops Agent<br/>Monitoring"]
+    E -->|Logging| H
+    
+    I["VPC<br/>10.0.0.0/16"] -->|Contains| D
+    I -->|Contains| F
+    I -->|Firewall Rules| B
+    I -->|Firewall Rules| C
+    
+    J["Terraform IaC"] -->|Provisions| I
+    J -->|Creates| D
+    J -->|Creates| F
+    J -->|Configures| E
+    J -->|Configures| G
+    
+    style A fill:#e1f5ff
+    style B fill:#fff9c4
+    style C fill:#fff9c4
+    style D fill:#f3e5f5
+    style E fill:#c8e6c9
+    style F fill:#f3e5f5
+    style G fill:#c8e6c9
+    style H fill:#ffe0b2
+    style I fill:#e8f5e9
+    style J fill:#f1f8e9
+```
