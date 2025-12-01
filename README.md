@@ -1,4 +1,4 @@
-# Proyecto 1 - IaaS clásico en GCP con Terraform
+# Proyecto 1 - IaaS en GCP con Terraform
 
 Este proyecto crea una arquitectura IaaS básica en Google Cloud Platform usando Terraform: una VPC personalizada con dos subredes (pública y privada), dos VMs (web y base de datos) y reglas de firewall seguras con acceso SSH vía IAP.
 
