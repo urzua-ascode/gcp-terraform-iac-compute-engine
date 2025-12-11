@@ -4,6 +4,7 @@ Este proyecto crea una arquitectura IaaS básica en Google Cloud Platform usando
 
 ## Arquitectura
 
+![Diagrama de Arquitectura](assets/arquitectura-gcp.png)
 - VPC personalizada sin subredes automáticas.
 - Subred pública y subred privada en la misma región.
 - VM web en la subred pública con Nginx instalado vía startup script.
